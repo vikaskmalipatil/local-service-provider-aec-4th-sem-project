@@ -125,30 +125,30 @@ export default function ProviderDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 relative">
+    <div className="min-h-screen bg-[var(--background)] relative">
       {/* Navbar */}
-      <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+      <header className="sticky top-0 z-50 glass-panel border-b-0">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 font-black text-xl">
-            <span className="bg-indigo-600 text-white px-2 py-1 rounded-lg text-sm">LF</span>
-            LocalFinder
+          <Link href="/" className="flex items-center gap-2 font-black text-xl hover:scale-105 transition-transform">
+            <span className="bg-gradient-to-br from-indigo-600 to-purple-600 text-white px-2.5 py-1 rounded-lg text-sm shadow-md">LF</span>
+            <span className="text-gradient bg-gradient-to-r from-slate-900 to-indigo-900">LocalFinder</span>
           </Link>
           <div className="flex items-center gap-4">
-            <div className="hidden sm:flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold text-sm">
+            <div className="hidden sm:flex items-center gap-3 bg-white/50 px-3 py-1.5 rounded-xl border border-slate-200/50">
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center text-indigo-700 font-bold text-sm shadow-sm border border-indigo-200/50">
                 {provider?.name?.charAt(0).toUpperCase()}
               </div>
               <div>
-                <div className="text-sm font-bold">{provider?.name}</div>
-                <div className="text-xs text-gray-400">{provider?.specialty}</div>
+                <div className="text-sm font-bold text-slate-800">{provider?.name}</div>
+                <div className="text-xs text-indigo-600/80 font-medium">{provider?.specialty}</div>
               </div>
             </div>
-            <Link href="/profile" className="px-3 py-1.5 rounded-lg bg-gray-100 text-gray-700 text-sm font-medium hover:bg-gray-200 transition-colors">
+            <Link href="/profile" className="px-4 py-2 rounded-xl bg-indigo-50/80 text-indigo-700 text-sm font-bold hover:bg-indigo-100 transition-colors shadow-sm">
               Profile
             </Link>
             <button
               onClick={handleLogout}
-              className="px-3 py-1.5 rounded-lg bg-red-50 text-red-600 text-sm font-medium hover:bg-red-100 transition-colors"
+              className="px-4 py-2 rounded-xl bg-red-50/80 text-red-600 text-sm font-bold hover:bg-red-100 transition-colors shadow-sm"
             >
               Logout
             </button>
@@ -158,40 +158,40 @@ export default function ProviderDashboard() {
 
       <main className="max-w-6xl mx-auto px-4 py-8">
         {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 animate-fade-in">
           {[
-            { label: "Specialty", value: provider?.specialty, icon: "🔧" },
-            { label: "Experience", value: `${provider?.experience} yrs`, icon: "📅" },
-            { label: "Total Jobs", value: provider?.totalJobs || 0, icon: "✅" },
-            { label: "Status", value: provider?.available ? "Available" : "Busy", icon: "🟢" },
+            { label: "Specialty", value: provider?.specialty, icon: "🔧", bg: "from-blue-50 to-indigo-50" },
+            { label: "Experience", value: `${provider?.experience} yrs`, icon: "📅", bg: "from-purple-50 to-pink-50" },
+            { label: "Total Jobs", value: provider?.totalJobs || 0, icon: "✅", bg: "from-emerald-50 to-teal-50" },
+            { label: "Status", value: provider?.available ? "Available" : "Busy", icon: provider?.available ? "🟢" : "🔴", bg: "from-amber-50 to-orange-50" },
           ].map((stat) => (
-            <div key={stat.label} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex gap-4 items-center">
-              <span className="text-3xl">{stat.icon}</span>
+            <div key={stat.label} className={`bg-gradient-to-br ${stat.bg} rounded-2xl border border-white/60 shadow-sm p-5 flex gap-4 items-center hover:shadow-md transition-shadow`}>
+              <span className="text-3xl filter drop-shadow-sm">{stat.icon}</span>
               <div>
-                <div className="text-xs text-gray-400 font-medium uppercase tracking-wider">{stat.label}</div>
-                <div className="text-lg font-bold text-gray-900">{stat.value}</div>
+                <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">{stat.label}</div>
+                <div className="text-lg font-black text-slate-800">{stat.value}</div>
               </div>
             </div>
           ))}
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 mb-6">
+        <div className="flex gap-3 mb-6 p-1.5 bg-slate-200/50 rounded-2xl w-fit backdrop-blur-sm">
           <button
             onClick={() => setActiveTab("available")}
-            className={`px-5 py-2.5 rounded-xl font-bold transition-all ${
-              activeTab === "available" ? "bg-indigo-600 text-white shadow-md" : "bg-white text-gray-600 hover:bg-gray-50 border border-gray-200"
+            className={`px-6 py-2.5 rounded-xl font-bold transition-all text-sm ${
+              activeTab === "available" ? "bg-white text-indigo-700 shadow-sm" : "text-slate-500 hover:text-slate-700"
             }`}
           >
-            Available Requests ({availableRequests.length})
+            Available Requests <span className="ml-1.5 bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full text-xs">{availableRequests.length}</span>
           </button>
           <button
             onClick={() => setActiveTab("mine")}
-            className={`px-5 py-2.5 rounded-xl font-bold transition-all ${
-              activeTab === "mine" ? "bg-indigo-600 text-white shadow-md" : "bg-white text-gray-600 hover:bg-gray-50 border border-gray-200"
+            className={`px-6 py-2.5 rounded-xl font-bold transition-all text-sm ${
+              activeTab === "mine" ? "bg-white text-indigo-700 shadow-sm" : "text-slate-500 hover:text-slate-700"
             }`}
           >
-            My Jobs ({myRequests.length})
+            My Jobs <span className="ml-1.5 bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full text-xs">{myRequests.length}</span>
           </button>
         </div>
 
@@ -199,52 +199,51 @@ export default function ProviderDashboard() {
         {activeTab === "available" && (
           <div>
             {availableRequests.length === 0 ? (
-              <div className="bg-white rounded-3xl border border-dashed border-gray-200 p-12 text-center text-gray-500">
-                <div className="text-5xl mb-4">🎉</div>
-                <p className="font-bold text-lg text-gray-700">All caught up!</p>
+              <div className="glass-panel rounded-3xl p-12 text-center text-gray-500 animate-fade-in">
+                <div className="text-5xl mb-4 animate-float">🎉</div>
+                <p className="font-bold text-lg text-slate-700">All caught up!</p>
                 <p className="text-sm mt-1">New service requests matching your specialty will appear here.</p>
               </div>
             ) : (
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid md:grid-cols-2 gap-5 animate-fade-in">
                 {availableRequests.map((req) => (
-                  <div key={req._id} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 relative overflow-hidden">
+                  <div key={req._id} className="glass-panel bg-white/70 rounded-2xl p-6 relative overflow-hidden group hover:shadow-lg transition-all hover:-translate-y-1">
                     {req.requestedProvider === provider?._id && (
-                       <div className="absolute top-0 right-0 bg-indigo-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg">
-                         Direct Request to You
+                       <div className="absolute top-0 right-0 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[10px] font-bold px-4 py-1.5 rounded-bl-xl shadow-sm">
+                         ★ Direct Request
                        </div>
                     )}
-                    <div className="flex items-center justify-between mb-3 mt-2">
-                      <span className="px-3 py-1 bg-indigo-50 text-indigo-600 font-bold text-xs rounded-lg">
+                    <div className="flex items-center justify-between mb-4 mt-2">
+                      <span className="px-3 py-1 bg-indigo-50/80 border border-indigo-100 text-indigo-700 font-bold text-xs rounded-lg shadow-sm">
                         {req.serviceType === "Other" ? req.customServiceType : req.serviceType}
                       </span>
-                      <span className="text-xs text-gray-400">{new Date(req.createdAt).toLocaleDateString()}</span>
+                      <span className="text-xs text-slate-400 font-medium bg-slate-100/50 px-2 py-1 rounded-md">{new Date(req.createdAt).toLocaleDateString()}</span>
                     </div>
-                    <div className="flex justify-between items-start mb-1">
-                      <p className="text-gray-700 text-sm font-bold">
-                        Customer: <span className="text-indigo-600 font-extrabold">{req.user?.name}</span>
+                    <div className="flex justify-between items-start mb-2">
+                      <p className="text-slate-600 text-sm font-medium">
+                        Customer: <span className="text-slate-900 font-black">{req.user?.name}</span>
                       </p>
-                      <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded border ${
+                      <span className={`text-[10px] font-bold uppercase px-2.5 py-1 rounded-md border shadow-sm ${
                         req.urgency === 'Emergency' ? 'text-red-600 border-red-200 bg-red-50' :
                         req.urgency === 'High' ? 'text-orange-600 border-orange-200 bg-orange-50' :
-                        'text-gray-500 border-gray-200 bg-gray-50'
+                        'text-slate-600 border-slate-200 bg-slate-50'
                       }`}>
                         {req.urgency || "Normal"} Priority
                       </span>
                     </div>
-                    <p className="text-gray-500 text-xs mb-3 italic">Email: {req.user?.email}</p>
                     
                     {req.address && (
-                       <div className="mb-3 text-xs text-gray-600 flex items-center gap-1.5">
-                         <span className="text-gray-400">📍</span> {req.address}
+                       <div className="mb-4 text-xs text-slate-600 flex items-center gap-1.5 bg-slate-50/80 p-2 rounded-lg border border-slate-100">
+                         <span className="text-slate-400">📍</span> {req.address}
                        </div>
                     )}
 
-                    <div className="bg-slate-50 p-4 rounded-xl mb-4 border border-slate-100">
-                      <p className="text-gray-600 text-sm leading-relaxed">{req.details}</p>
+                    <div className="bg-white/60 p-4 rounded-xl mb-5 border border-slate-100/50 shadow-inner">
+                      <p className="text-slate-700 text-sm leading-relaxed">{req.details}</p>
                     </div>
                     <button
                       onClick={() => handleAccept(req._id)}
-                      className="w-full py-2.5 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100"
+                      className="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold hover:from-indigo-500 hover:to-purple-500 transition-all shadow-md active:scale-[0.98]"
                     >
                       Accept Request
                     </button>

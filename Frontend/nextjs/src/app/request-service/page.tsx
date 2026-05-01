@@ -128,13 +128,17 @@ function RequestForm() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 py-12 px-4">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-[var(--background)] py-12 px-4 relative overflow-hidden">
+      {/* Background Decor */}
+      <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-br from-indigo-900/10 via-purple-900/5 to-transparent pointer-events-none" />
+      <div className="absolute top-20 right-20 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none animate-pulse" />
+      
+      <div className="max-w-4xl mx-auto relative z-10">
         
         {/* Header */}
-        <div className="text-center mb-10">
-          <h1 className="text-4xl font-black text-gray-900 mb-4 tracking-tight">Need a Professional?</h1>
-          <p className="text-gray-500 text-lg max-w-xl mx-auto">
+        <div className="text-center mb-10 animate-fade-in-up">
+          <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight">Need a Professional?</h1>
+          <p className="text-slate-500 text-lg max-w-xl mx-auto font-medium">
             {directProviderId 
               ? `You are booking a service directly. Fill out the details below so they know exactly what you need.`
               : `Select a service and describe what you need. We'll match you with the best local providers.`}
@@ -142,29 +146,29 @@ function RequestForm() {
         </div>
 
         {directProviderId && (
-          <div className="mb-8 bg-indigo-50 border border-indigo-100 rounded-2xl p-4 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-indigo-600 text-white rounded-full flex items-center justify-center">
-                <User size={20} />
+          <div className="mb-8 glass-panel bg-indigo-50/80 rounded-2xl p-4 flex items-center justify-between animate-fade-in-up">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 bg-gradient-to-br from-indigo-600 to-purple-600 text-white rounded-xl flex items-center justify-center shadow-md">
+                <User size={24} />
               </div>
               <div>
-                <p className="text-xs font-bold text-indigo-600 uppercase tracking-widest">Direct Booking</p>
-                <p className="text-gray-900 font-bold">{directProviderName || "Selected Provider"}</p>
+                <p className="text-[10px] font-black text-indigo-500 uppercase tracking-widest mb-0.5">Direct Booking</p>
+                <p className="text-indigo-950 font-black text-lg">{directProviderName || "Selected Provider"}</p>
               </div>
             </div>
             <button 
               onClick={() => router.push("/request-service")}
-              className="text-xs font-bold text-gray-500 hover:text-red-500 underline"
+              className="text-xs font-bold text-slate-400 hover:text-red-500 hover:bg-red-50 px-3 py-1.5 rounded-lg transition-all"
             >
               Cancel Direct Booking
             </button>
           </div>
         )}
 
-        <div className="grid lg:grid-cols-5 gap-8">
+        <div className="grid lg:grid-cols-5 gap-8 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
           {/* Form Side */}
           <div className="lg:col-span-3">
-            <form onSubmit={handleSubmit} className="bg-white rounded-3xl shadow-sm border border-gray-100 p-8 space-y-8">
+            <form onSubmit={handleSubmit} className="glass-panel bg-white/80 rounded-3xl p-8 space-y-8">
               {error && (
                 <div className="p-4 bg-red-50 border border-red-200 text-red-600 rounded-2xl text-sm font-medium">
                   ⚠ {error}
@@ -278,10 +282,11 @@ function RequestForm() {
 
           {/* Info Side */}
           <div className="lg:col-span-2 space-y-6">
-            <div className="bg-indigo-600 rounded-3xl p-8 text-white shadow-xl shadow-indigo-200">
+            <div className="bg-gradient-to-br from-indigo-600 via-indigo-500 to-purple-600 rounded-3xl p-8 text-white shadow-xl shadow-indigo-200 relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10 group-hover:scale-150 transition-transform duration-700"></div>
               <ShieldCheck className="w-10 h-10 mb-4 text-indigo-200" />
-              <h3 className="text-xl font-bold mb-3">Safe & Reliable</h3>
-              <p className="text-indigo-100 text-sm leading-relaxed opacity-90">
+              <h3 className="text-xl font-black mb-3 text-white">Safe & Reliable</h3>
+              <p className="text-indigo-100 text-sm leading-relaxed opacity-90 font-medium">
                 Every professional on LocalFinder is verified. We ensure you get quality service with transparent pricing and secure handling of your requests.
               </p>
             </div>

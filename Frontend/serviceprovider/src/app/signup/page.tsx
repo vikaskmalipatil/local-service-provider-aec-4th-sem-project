@@ -60,27 +60,27 @@ export default function ProviderSignup() {
   return (
     <div className="min-h-screen flex flex-col lg:flex-row">
       {/* Left Branding Panel */}
-      <div className="hidden lg:flex lg:w-2/5 bg-gradient-to-br from-indigo-700 via-indigo-600 to-purple-700 flex-col justify-center items-center p-16 relative overflow-hidden">
-        <div className="absolute -top-24 -left-24 w-72 h-72 bg-white/5 rounded-full blur-3xl" />
-        <div className="absolute -bottom-24 -right-24 w-72 h-72 bg-purple-500/20 rounded-full blur-3xl" />
-        <div className="relative text-center">
+      <div className="hidden lg:flex lg:w-2/5 bg-gradient-to-br from-indigo-800 via-indigo-600 to-purple-800 flex-col justify-center items-center p-16 relative overflow-hidden animate-fade-in">
+        <div className="absolute -top-24 -left-24 w-[30rem] h-[30rem] bg-white/10 rounded-full blur-3xl pointer-events-none animate-pulse" />
+        <div className="absolute -bottom-24 -right-24 w-[30rem] h-[30rem] bg-purple-500/30 rounded-full blur-3xl pointer-events-none" />
+        <div className="relative text-center z-10">
           <div className="inline-flex items-center gap-3 mb-10">
-            <div className="bg-white/15 text-white font-black text-xl px-3 py-2 rounded-xl border border-white/20">LF</div>
-            <span className="text-white font-bold text-xl">LocalFinder</span>
+            <div className="bg-white/20 backdrop-blur-md text-white font-black text-xl px-4 py-2 rounded-xl border border-white/30 shadow-xl">LF</div>
+            <span className="text-white font-black text-2xl tracking-tight">LocalFinder</span>
           </div>
-          <h2 className="text-4xl font-extrabold text-white mb-4">The Professionals' Choice</h2>
-          <p className="text-indigo-200 text-lg max-w-sm leading-relaxed">
+          <h2 className="text-4xl font-black text-white mb-4">The Professionals' Choice</h2>
+          <p className="text-indigo-100 text-lg max-w-sm leading-relaxed font-medium">
             Your dedicated workspace for managing client requests and streamlining your daily operations.
           </p>
 
           {/* Step indicators */}
           <div className="mt-12 space-y-4">
             {["Create your account", "Choose your specialty", "Start accepting jobs"].map((t, i) => (
-              <div key={t} className={`flex items-center gap-4 text-left transition-all ${step > i ? "opacity-100" : "opacity-50"}`}>
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-black shrink-0 ${step > i ? "bg-green-400 text-white" : "bg-white/15 text-white border border-white/20"}`}>
+              <div key={t} className={`flex items-center gap-4 text-left transition-all glass-panel bg-white/5 rounded-2xl p-4 border-white/10 ${step > i ? "opacity-100 shadow-sm" : "opacity-50"}`}>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-black shrink-0 ${step > i ? "bg-emerald-400 text-white shadow-md" : "bg-white/10 text-white"}`}>
                   {step > i ? "✓" : i + 1}
                 </div>
-                <span className="text-white font-medium text-sm">{t}</span>
+                <span className="text-white font-semibold text-sm">{t}</span>
               </div>
             ))}
           </div>
@@ -88,22 +88,23 @@ export default function ProviderSignup() {
       </div>
 
       {/* Right Form */}
-      <div className="flex-1 flex items-start justify-center bg-slate-50 p-8 overflow-y-auto">
-        <div className="w-full max-w-lg py-8">
+      <div className="flex-1 flex items-start justify-center bg-[var(--background)] p-8 overflow-y-auto animate-fade-in" style={{ animationDelay: '0.1s' }}>
+        <div className="w-full max-w-xl bg-white p-10 rounded-3xl shadow-xl border border-slate-100 my-8">
           {/* Mobile logo */}
           <div className="lg:hidden flex items-center gap-2 mb-8 justify-center">
-            <div className="bg-indigo-600 text-white font-black px-2 py-1 rounded-lg">LF</div>
-            <span className="font-bold text-gray-800">LocalFinder</span>
+            <div className="bg-gradient-to-br from-indigo-600 to-purple-600 text-white font-black px-3 py-1.5 rounded-lg shadow-md">LF</div>
+            <span className="font-black text-gray-900 text-xl tracking-tight">LocalFinder</span>
           </div>
 
-          <div className="mb-8">
-            <h1 className="text-3xl font-extrabold text-gray-900">Create your account</h1>
-            <p className="text-gray-500 mt-1">Join as a service provider today</p>
+          <div className="mb-8 text-center lg:text-left">
+            <h1 className="text-3xl font-black text-gray-900">Create your account</h1>
+            <p className="text-gray-500 mt-2 font-medium">Join as a service provider today</p>
           </div>
 
           {error && (
-            <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-600 rounded-2xl text-sm">
-              ⚠ {error}
+            <div className="mb-6 p-4 bg-red-50 border border-red-100 text-red-600 rounded-2xl text-sm shadow-sm animate-fade-in flex items-start gap-3">
+              <span className="text-red-400 text-lg leading-none mt-0.5">⚠</span>
+              {error}
             </div>
           )}
 
@@ -111,32 +112,32 @@ export default function ProviderSignup() {
             {/* Basic Info */}
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5">Full Name *</label>
+                <label className="block text-sm font-bold text-slate-700 mb-1.5">Full Name *</label>
                 <input
                   name="name" type="text" required value={form.name} onChange={handleChange}
-                  className="w-full px-4 py-3.5 border border-gray-200 rounded-2xl bg-white outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-400 transition-all text-sm placeholder:text-gray-400"
+                  className="w-full px-4 py-3.5 border border-slate-200/80 rounded-2xl bg-slate-50/50 outline-none focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all text-sm placeholder:text-gray-400"
                   placeholder="John Doe"
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5">Email *</label>
+                <label className="block text-sm font-bold text-slate-700 mb-1.5">Email *</label>
                 <input
                   name="email" type="email" required value={form.email} onChange={handleChange}
-                  className="w-full px-4 py-3.5 border border-gray-200 rounded-2xl bg-white outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-400 transition-all text-sm placeholder:text-gray-400"
+                  className="w-full px-4 py-3.5 border border-slate-200/80 rounded-2xl bg-slate-50/50 outline-none focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all text-sm placeholder:text-gray-400"
                   placeholder="you@example.com"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1.5">Password *</label>
-              <div className="relative">
+              <label className="block text-sm font-bold text-slate-700 mb-1.5">Password *</label>
+              <div className="relative group">
                 <input
                   name="password" type={showPwd ? "text" : "password"} required value={form.password} onChange={handleChange}
-                  className="w-full px-4 py-3.5 pr-12 border border-gray-200 rounded-2xl bg-white outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-400 transition-all text-sm placeholder:text-gray-400"
+                  className="w-full px-4 py-3.5 pr-12 border border-slate-200/80 rounded-2xl bg-slate-50/50 outline-none focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all text-sm placeholder:text-gray-400"
                   placeholder="Minimum 6 characters"
                 />
-                <button type="button" onClick={() => setShowPwd(!showPwd)} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                <button type="button" onClick={() => setShowPwd(!showPwd)} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-500 hover:text-indigo-600 transition-colors">
                   {showPwd ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
@@ -182,39 +183,39 @@ export default function ProviderSignup() {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5">Phone</label>
+                <label className="block text-sm font-bold text-slate-700 mb-1.5">Phone</label>
                 <input
                   name="phone" type="tel" value={form.phone} onChange={handleChange}
-                  className="w-full px-4 py-3.5 border border-gray-200 rounded-2xl bg-white outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-400 transition-all text-sm placeholder:text-gray-400"
+                  className="w-full px-4 py-3.5 border border-slate-200/80 rounded-2xl bg-slate-50/50 outline-none focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all text-sm placeholder:text-gray-400"
                   placeholder="+91 XXXXX XXXXX"
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5">Experience (years)</label>
+                <label className="block text-sm font-bold text-slate-700 mb-1.5">Experience (years)</label>
                 <input
                   name="experience" type="number" min="0" value={form.experience} onChange={handleChange}
-                  className="w-full px-4 py-3.5 border border-gray-200 rounded-2xl bg-white outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-400 transition-all text-sm placeholder:text-gray-400"
+                  className="w-full px-4 py-3.5 border border-slate-200/80 rounded-2xl bg-slate-50/50 outline-none focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all text-sm placeholder:text-gray-400"
                   placeholder="e.g. 5"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1.5">Bio / About You</label>
+              <label className="block text-sm font-bold text-slate-700 mb-1.5">Bio / About You</label>
               <textarea
                 name="bio" value={form.bio} onChange={handleChange} rows={3}
-                className="w-full px-4 py-3.5 border border-gray-200 rounded-2xl bg-white outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-400 transition-all text-sm placeholder:text-gray-400 resize-none"
+                className="w-full px-4 py-3.5 border border-slate-200/80 rounded-2xl bg-slate-50/50 outline-none focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition-all text-sm placeholder:text-gray-400 resize-none"
                 placeholder="Tell customers about your skills and experience..."
               />
             </div>
 
             <button
               type="submit" disabled={loading || !form.specialty}
-              className="w-full py-4 rounded-2xl bg-indigo-600 text-white font-bold text-base hover:bg-indigo-700 active:scale-95 transition-all shadow-lg shadow-indigo-200 disabled:opacity-50 flex items-center justify-center gap-2"
+              className="w-full py-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold text-base hover:from-indigo-500 hover:to-purple-500 active:scale-[0.98] transition-all shadow-lg shadow-indigo-200 disabled:opacity-50 flex items-center justify-center gap-2 mt-4"
             >
               {loading ? (
                 <span className="flex items-center gap-2">
-                  <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                   Creating account...
                 </span>
               ) : (
@@ -223,9 +224,9 @@ export default function ProviderSignup() {
             </button>
           </form>
 
-          <div className="mt-6 text-center text-sm text-gray-500">
+          <div className="mt-6 border-t border-slate-100 pt-6 text-center text-sm text-slate-500 font-medium">
             Already have an account?{" "}
-            <Link href="/login" className="text-indigo-600 font-bold hover:underline">Sign in</Link>
+            <Link href="/login" className="text-indigo-600 font-black hover:text-purple-600 transition-colors">Sign in</Link>
           </div>
         </div>
       </div>

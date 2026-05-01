@@ -81,11 +81,27 @@ router.get("/profile", authMiddleware, roleMiddleware("provider"), async (req, r
 // ✅ UPDATE MY PROFILE (provider)
 router.put("/profile", authMiddleware, roleMiddleware("provider"), async (req, res) => {
   try {
-    const { bio, phone, experience, available } = req.body;
+    const { bio, phone, experience, available, address, city, state, zip, country, lat, lng } = req.body;
+    
+    const updateData = { bio, phone, experience, available };
+    
+    if (address !== undefined) updateData.address = address;
+    if (city !== undefined) updateData.city = city;
+    if (state !== undefined) updateData.state = state;
+    if (zip !== undefined) updateData.zip = zip;
+    if (country !== undefined) updateData.country = country;
+    
+    if (lat !== undefined && lng !== undefined) {
+      updateData.location = {
+        type: "Point",
+        coordinates: [parseFloat(lng), parseFloat(lat)]
+      };
+    }
+
     const provider = await ServiceProvider.findByIdAndUpdate(
       req.user.id,
-      { bio, phone, experience, available },
-      { new: true }
+      updateData,
+      { returnDocument: "after" }
     ).select("-password");
     res.json({ provider });
   } catch (err) {
@@ -96,9 +112,32 @@ router.put("/profile", authMiddleware, roleMiddleware("provider"), async (req, r
 // ✅ GET ALL APPROVED PROVIDERS (public, for customers)
 router.get("/all", async (req, res) => {
   try {
-    const { specialty } = req.query;
+    const { specialty, lat, lng, maxDistance } = req.query;
+    
+    if (lat && lng) {
+      // Use geospatial aggregation to get distance
+      const distanceLimit = maxDistance ? parseInt(maxDistance) : 50000; // default 50km
+      const query = { approved: true };
+      if (specialty && specialty !== "All") query.specialty = specialty;
+
+      const providers = await ServiceProvider.aggregate([
+        {
+          $geoNear: {
+            near: { type: "Point", coordinates: [parseFloat(lng), parseFloat(lat)] },
+            distanceField: "distance", // Distance in meters
+            maxDistance: distanceLimit,
+            query: query,
+            spherical: true
+          }
+        },
+        { $unset: "password" }
+      ]);
+      return res.json(providers);
+    }
+
+    // Normal query without location
     const filter = { approved: true };
-    if (specialty) filter.specialty = specialty;
+    if (specialty && specialty !== "All") filter.specialty = specialty;
     const providers = await ServiceProvider.find(filter).select("-password");
     res.json(providers);
   } catch (err) {

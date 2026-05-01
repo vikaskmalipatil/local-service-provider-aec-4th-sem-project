@@ -41,8 +41,8 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-2xl shadow-lg border border-gray-100">
+    <div className="flex items-center justify-center bg-[var(--surface-2)] py-14 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8 surface p-10 rounded-2xl shadow-lg">
         <div>
           <h2 className="text-center text-3xl font-extrabold text-gray-900 tracking-tight">
             Welcome back
@@ -91,7 +91,7 @@ export default function LoginPage() {
 
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-600">
-            Don't have an account?{' '}
+            Don&apos;t have an account?{" "}
             <button
               type="button"
               onClick={() => router.push('/signup')}

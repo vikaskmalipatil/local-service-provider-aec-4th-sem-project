@@ -1,19 +1,20 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Heart, Search, Star, MapPin, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { SERVICES } from "./data/services";
 
 export default function Home() {
-  const [likes, setLikes] = useState<number[]>([]);
-
-  useEffect(() => {
-    const savedLikes = localStorage.getItem("likedServices");
-    if (savedLikes) {
-      setLikes(JSON.parse(savedLikes));
+  const [likes, setLikes] = useState<number[]>(() => {
+    if (typeof window === "undefined") return [];
+    try {
+      const savedLikes = localStorage.getItem("likedServices");
+      return savedLikes ? JSON.parse(savedLikes) : [];
+    } catch {
+      return [];
     }
-  }, []);
+  });
 
   const toggleLike = (id: number) => {
     const newLikes = likes.includes(id)
@@ -25,38 +26,146 @@ export default function Home() {
   };
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="min-h-full">
       {/* Hero Section */}
-      <section className="relative h-[500px] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-700 opacity-90 z-10" />
-        <img 
-          src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1600&q=80" 
-          alt="Hero background" 
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="relative z-20 text-center px-4">
-          <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6">
-            Expert Services at Your Fingertips
-          </h1>
-          <p className="text-xl text-indigo-100 mb-8 max-w-2xl mx-auto">
-            Find and book trusted local professionals for everything your home needs.
-          </p>
-          <div className="max-w-xl mx-auto relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-            <input 
-              type="text" 
-              placeholder="What service do you need?" 
-              className="w-full pl-12 pr-4 py-4 rounded-full shadow-2xl text-lg focus:outline-none focus:ring-2 focus:ring-indigo-300"
-            />
-            <button className="absolute right-2 top-1/2 -translate-y-1/2 bg-indigo-600 text-white px-6 py-2 rounded-full font-bold hover:bg-indigo-700 transition-colors">
-              Search
-            </button>
+      <section className="relative overflow-hidden min-h-[85vh] flex items-center animate-fade-in-up">
+        <div className="absolute inset-0">
+          <img
+            src="https://images.unsplash.com/photo-1542644917-8e100f28a38b?w=2000&q=80&auto=format&fit=crop"
+            alt="Local Indian services background"
+            className="h-full w-full object-cover animate-float"
+            style={{ transformOrigin: 'center center' }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-indigo-950/90 via-indigo-900/80 to-purple-950/80 backdrop-blur-[2px]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(99,102,241,0.4),transparent_60%)]" />
+        </div>
+
+        <div className="relative z-10 page-container py-16 md:py-24">
+          <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
+            <div className="lg:col-span-7">
+              <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-indigo-50 ring-1 ring-white/15 backdrop-blur">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                Trusted local pros, fast booking
+              </div>
+
+              <h1 className="mt-5 text-4xl font-black tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
+                Expert Services,
+                <span className="block text-gradient bg-gradient-to-r from-indigo-300 via-white to-purple-300 pb-2">
+                  right when you need them
+                </span>
+              </h1>
+              <p className="mt-6 max-w-2xl text-lg text-indigo-100/90 sm:text-xl font-medium">
+                Find verified professionals for repairs, cleaning, and maintenance — compare pricing, book in minutes, and track your request live.
+              </p>
+
+              <div className="mt-8 max-w-2xl">
+                <div className="relative">
+                  <Search
+                    className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-indigo-100/70"
+                    size={20}
+                    aria-hidden="true"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Search: plumber, electrician, AC repair…"
+                    className="w-full rounded-2xl bg-white/95 pl-12 pr-28 py-4 text-sm text-slate-900 shadow-2xl ring-1 ring-white/30 backdrop-blur placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-300 sm:text-base"
+                    aria-label="Search for a service"
+                  />
+                  <button className="absolute right-2 top-1/2 -translate-y-1/2 rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-bold text-white shadow-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-300 transition-colors">
+                    Search
+                  </button>
+                </div>
+
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {["Plumbing", "Electrician", "Cleaning", "AC Repair", "Carpentry"].map((label) => (
+                    <button
+                      key={label}
+                      type="button"
+                      className="rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold text-indigo-50 ring-1 ring-white/15 hover:bg-white/15 transition-colors"
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                  {[
+                    { k: "4.8+", v: "Average rating" },
+                    { k: "10k+", v: "Bookings served" },
+                    { k: "30m", v: "Typical response" },
+                    { k: "Verified", v: "Background checks" },
+                  ].map((s) => (
+                    <div
+                      key={s.v}
+                      className="rounded-2xl bg-white/10 px-4 py-3 ring-1 ring-white/15 backdrop-blur"
+                    >
+                      <div className="text-lg font-extrabold text-white">{s.k}</div>
+                      <div className="text-[11px] font-semibold text-indigo-100/80">{s.v}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="lg:col-span-5 hidden lg:block animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+              <div className="glass-panel rounded-3xl p-6 shadow-2xl relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/20 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
+                <div className="flex items-center justify-between gap-4 mb-6">
+                  <div>
+                    <div className="text-lg font-bold text-white">Popular this week</div>
+                    <div className="text-sm text-indigo-200">Services people book the most</div>
+                  </div>
+                  <div className="rounded-full bg-indigo-500/30 border border-indigo-300/30 px-3 py-1 text-xs font-bold text-indigo-100 shadow-inner">
+                    Near you
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  {SERVICES.slice(0, 3).map((service) => (
+                    <div
+                      key={service.id}
+                      className="group flex items-center gap-4 rounded-2xl bg-white/10 border border-white/10 p-3 hover:bg-white/20 transition-all cursor-pointer backdrop-blur-md"
+                    >
+                      <img
+                        src={service.image}
+                        alt={service.name}
+                        className="h-16 w-16 rounded-xl object-cover shadow-md group-hover:scale-105 transition-transform"
+                      />
+                      <div className="min-w-0 flex-1">
+                        <div className="truncate text-base font-bold text-white group-hover:text-indigo-100 transition-colors">{service.name}</div>
+                        <div className="mt-1 flex items-center gap-2 text-xs font-medium text-indigo-200">
+                          <span className="inline-flex items-center text-amber-400 font-bold bg-amber-400/10 px-1.5 py-0.5 rounded">
+                            <Star size={12} className="fill-amber-400 mr-1" /> {service.rating}
+                          </span>
+                          <span className="text-white/20">•</span>
+                          <span className="truncate">{service.category}</span>
+                        </div>
+                      </div>
+                      <div className="shrink-0 text-sm font-extrabold text-white bg-indigo-600/50 px-2 py-1 rounded-lg border border-indigo-500/30">{service.price}</div>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-6 flex gap-3">
+                  <Link
+                    href="/providers"
+                    className="flex-1 rounded-xl bg-indigo-600 px-4 py-3 text-center text-sm font-bold text-white hover:bg-indigo-500 transition-all shadow-lg hover:shadow-indigo-500/25"
+                  >
+                    Browse providers
+                  </Link>
+                  <Link
+                    href="/request-service"
+                    className="flex-1 rounded-xl bg-white/10 border border-white/20 px-4 py-3 text-center text-sm font-bold text-white hover:bg-white/20 transition-all backdrop-blur-sm"
+                  >
+                    Request now
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Featured Services */}
-      <section className="max-w-7xl mx-auto px-4 py-20">
+      <section className="page-container py-20">
         <div className="flex items-center justify-between mb-12">
           <div>
             <h2 className="text-3xl font-bold text-gray-900">Featured Services</h2>
@@ -116,7 +225,7 @@ export default function Home() {
 
       {/* Why Choose Us Section */}
       <section className="bg-indigo-50 py-20 px-4">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+        <div className="page-container grid md:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
               Why Choose LocalFinder?
