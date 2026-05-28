@@ -42,7 +42,7 @@ export default function AddAddress() {
         try {
             const token = localStorage.getItem("token");
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://local-service-provider-aec-4th-sem.onrender.com'}/api/address/add`, {
+            const res = await fetch(`http://localhost:5000/api/address/add`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

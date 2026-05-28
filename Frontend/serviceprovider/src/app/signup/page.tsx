@@ -37,7 +37,7 @@ export default function ProviderSignup() {
     setError(null);
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://local-service-provider-aec-4th-sem.onrender.com'}/api/providers/signup`, {
+      const res = await fetch(`http://localhost:5000/api/providers/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

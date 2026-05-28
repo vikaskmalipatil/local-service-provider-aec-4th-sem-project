@@ -10,7 +10,7 @@ export default function ProfilePage() {
   const [selectedId, setSelectedId] = useState(null);
   const fetchAddresses = async (token) => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://local-service-provider-aec-4th-sem.onrender.com'}/api/address/my`, {
+      const res = await fetch(`http://localhost:5000/api/address/my`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -39,7 +39,7 @@ export default function ProfilePage() {
         return;
       }
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://local-service-provider-aec-4th-sem.onrender.com'}/api/auth/profile`, {
+        const res = await fetch(`http://localhost:5000/api/auth/profile`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -73,7 +73,7 @@ export default function ProfilePage() {
   const handleDelete = async (id) => {
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://local-service-provider-aec-4th-sem.onrender.com'}/api/address/${id}`, {
+      const res = await fetch(`http://localhost:5000/api/address/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

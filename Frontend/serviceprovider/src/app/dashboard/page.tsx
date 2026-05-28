@@ -31,9 +31,9 @@ export default function ProviderDashboard() {
 
     try {
       const [profileRes, myReqRes, availRes] = await Promise.all([
-        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://local-service-provider-aec-4th-sem.onrender.com'}/api/providers/profile`, { headers: { Authorization: `Bearer ${token}` } }),
-        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://local-service-provider-aec-4th-sem.onrender.com'}/api/providers/requests`, { headers: { Authorization: `Bearer ${token}` } }),
-        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://local-service-provider-aec-4th-sem.onrender.com'}/api/providers/available-requests`, { headers: { Authorization: `Bearer ${token}` } }),
+        fetch(`http://localhost:5000/api/providers/profile`, { headers: { Authorization: `Bearer ${token}` } }),
+        fetch(`http://localhost:5000/api/providers/requests`, { headers: { Authorization: `Bearer ${token}` } }),
+        fetch(`http://localhost:5000/api/providers/available-requests`, { headers: { Authorization: `Bearer ${token}` } }),
       ]);
 
       if (profileRes.status === 401 || profileRes.status === 403) {
@@ -61,7 +61,7 @@ export default function ProviderDashboard() {
   const handleAccept = async (requestId: string) => {
     const token = getToken();
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://local-service-provider-aec-4th-sem.onrender.com'}/api/providers/accept/${requestId}`, {
+      const res = await fetch(`http://localhost:5000/api/providers/accept/${requestId}`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -75,7 +75,7 @@ export default function ProviderDashboard() {
   const handleStatusUpdate = async (requestId: string, status: string) => {
     const token = getToken();
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://local-service-provider-aec-4th-sem.onrender.com'}/api/providers/request/${requestId}/status`, {
+      const res = await fetch(`http://localhost:5000/api/providers/request/${requestId}/status`, {
         method: "PUT",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ status }),
@@ -92,7 +92,7 @@ export default function ProviderDashboard() {
     etaDate.setMinutes(etaDate.getMinutes() + etaMinutes);
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://local-service-provider-aec-4th-sem.onrender.com'}/api/providers/request/${requestId}/tracking`, {
+      const res = await fetch(`http://localhost:5000/api/providers/request/${requestId}/tracking`, {
         method: "PUT",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({

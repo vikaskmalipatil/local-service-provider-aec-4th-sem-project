@@ -68,7 +68,7 @@ function RequestForm() {
     setError(null);
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://local-service-provider-aec-4th-sem.onrender.com'}/api/requests`, {
+      const res = await fetch(`http://localhost:5000/api/requests`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

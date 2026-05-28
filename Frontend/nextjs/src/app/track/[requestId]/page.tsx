@@ -23,10 +23,10 @@ export default function TrackingPage() {
 
     try {
       const [userRes, reqRes] = await Promise.all([
-        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://local-service-provider-aec-4th-sem.onrender.com'}/api/auth/profile`, {
+        fetch(`http://localhost:5000/api/auth/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://local-service-provider-aec-4th-sem.onrender.com'}/api/requests/my`, {
+        fetch(`http://localhost:5000/api/requests/my`, {
           headers: { Authorization: `Bearer ${token}` },
         })
       ]);

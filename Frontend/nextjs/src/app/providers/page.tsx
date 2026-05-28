@@ -41,7 +41,7 @@ export default function ProvidersPage() {
   const [userLocation, setUserLocation] = useState<{lat: number, lng: number} | null>(null);
 
   useEffect(() => {
-    let url = `${process.env.NEXT_PUBLIC_API_URL || 'https://local-service-provider-aec-4th-sem.onrender.com'}/api/providers/all`;
+    let url = `http://localhost:5000/api/providers/all`;
     const params = new URLSearchParams();
     
     if (specialty !== "All") params.append("specialty", specialty);
@@ -77,7 +77,7 @@ export default function ProvidersPage() {
     
     if (token && selectedAddressId) {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://local-service-provider-aec-4th-sem.onrender.com'}/api/address/my`, {
+        const res = await fetch(`http://localhost:5000/api/address/my`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         if (res.ok) {
