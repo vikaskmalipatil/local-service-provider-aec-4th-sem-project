@@ -27,7 +27,7 @@ function FixMap() {
     return null;
 }
 
-function LocationMarker({ onSelect, defaultLocation }) {
+function LocationMarker({ onSelect, defaultLocation }: any) {
     const [position, setPosition] = useState(defaultLocation || null);
 
     useMapEvents({
