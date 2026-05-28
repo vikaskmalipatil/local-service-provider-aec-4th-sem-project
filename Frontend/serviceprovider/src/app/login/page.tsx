@@ -19,7 +19,7 @@ export default function ProviderLogin() {
     setError(null);
 
     try {
-      const res = await fetch("http://localhost:5000/api/providers/login", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://local-service-provider-aec-4th-sem.onrender.com'}/api/providers/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

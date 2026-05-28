@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import io from "socket.io-client";
 
-const socket = io("http://localhost:5000");
+const socket = io(`${process.env.NEXT_PUBLIC_API_URL || 'https://local-service-provider-aec-4th-sem.onrender.com'}`);
 
 export default function ChatWindow({ requestId, userId, userRole, recipientName }) {
   const [message, setMessage] = useState("");
@@ -15,7 +15,7 @@ export default function ChatWindow({ requestId, userId, userRole, recipientName 
     socket.emit("join_room", requestId);
 
     // Fetch message history
-    fetch(`http://localhost:5000/api/chat/${requestId}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://local-service-provider-aec-4th-sem.onrender.com'}/api/chat/${requestId}`)
       .then((res) => res.json())
       .then((data) => setChat(data))
       .catch((err) => console.error("Error fetching chat history:", err));

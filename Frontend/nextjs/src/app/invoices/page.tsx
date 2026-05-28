@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { FileText, ArrowLeft, X, Printer } from "lucide-react";
 
-const API = "http://localhost:5000/api";
+const API = `${process.env.NEXT_PUBLIC_API_URL || 'https://local-service-provider-aec-4th-sem.onrender.com'}/api`;
 
 type LineItem = { description: string; quantity: number; unitPrice: number };
 type Invoice = {

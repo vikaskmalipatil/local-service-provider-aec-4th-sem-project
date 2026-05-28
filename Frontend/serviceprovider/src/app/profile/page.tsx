@@ -24,7 +24,7 @@ export default function ProviderProfile() {
     const token = getToken();
     if (!token) { router.push("/login"); return; }
 
-    fetch("http://localhost:5000/api/providers/profile", {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://local-service-provider-aec-4th-sem.onrender.com'}/api/providers/profile`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
@@ -54,7 +54,7 @@ export default function ProviderProfile() {
 
     const token = getToken();
     try {
-      const res = await fetch("http://localhost:5000/api/providers/profile", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://local-service-provider-aec-4th-sem.onrender.com'}/api/providers/profile`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

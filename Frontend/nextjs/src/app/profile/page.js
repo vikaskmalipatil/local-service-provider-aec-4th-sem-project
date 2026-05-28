@@ -19,10 +19,10 @@ export default function ProfilePage() {
 
         try {
             const [userRes, reqRes] = await Promise.all([
-                fetch("http://localhost:5000/api/auth/profile", {
+                fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://local-service-provider-aec-4th-sem.onrender.com'}/api/auth/profile`, {
                     headers: { Authorization: `Bearer ${token}` },
                 }),
-                fetch("http://localhost:5000/api/requests/my", {
+                fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://local-service-provider-aec-4th-sem.onrender.com'}/api/requests/my`, {
                     headers: { Authorization: `Bearer ${token}` },
                 })
             ]);
@@ -57,7 +57,7 @@ export default function ProfilePage() {
         if (!window.confirm("Are you sure you want to cancel this request?")) return;
         const token = localStorage.getItem("token");
         try {
-            const res = await fetch(`http://localhost:5000/api/requests/${id}/cancel`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://local-service-provider-aec-4th-sem.onrender.com'}/api/requests/${id}/cancel`, {
                 method: "PUT",
                 headers: { Authorization: `Bearer ${token}` }
             });
@@ -75,7 +75,7 @@ export default function ProfilePage() {
     const handleReviewSubmit = async (reqId, providerId, rating, comment) => {
         const token = localStorage.getItem("token");
         try {
-            const res = await fetch(`http://localhost:5000/api/reviews`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'https://local-service-provider-aec-4th-sem.onrender.com'}/api/reviews`, {
                 method: "POST",
                 headers: { 
                     "Content-Type": "application/json",
