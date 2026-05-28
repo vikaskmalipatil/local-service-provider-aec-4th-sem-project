@@ -12,6 +12,7 @@ import serviceRequestRoutes from "./routes/serviceRequestRoutes.js";
 import providerRoutes from "./routes/providerRoutes.js";
 import chatRoutes from "./routes/chatRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
+import invoiceRoutes from "./routes/invoiceRoutes.js";
 
 dotenv.config();
 
@@ -34,6 +35,7 @@ app.use("/api/requests", serviceRequestRoutes);
 app.use("/api/providers", providerRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/reviews", reviewRoutes);
+app.use("/api/invoices", invoiceRoutes);
 
 // Socket.io logic
 io.on("connection", (socket) => {

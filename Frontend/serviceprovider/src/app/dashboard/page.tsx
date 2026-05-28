@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { MessageSquare, X } from "lucide-react";
+import { MessageSquare, X, FileText } from "lucide-react";
 import ChatWindow from "../components/ChatWindow";
 
 const STATUS_COLORS: Record<string, string> = {
@@ -143,6 +143,9 @@ export default function ProviderDashboard() {
                 <div className="text-xs text-indigo-600/80 font-medium">{provider?.specialty}</div>
               </div>
             </div>
+            <Link href="/invoices" className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-50/80 text-emerald-700 text-sm font-bold hover:bg-emerald-100 transition-colors shadow-sm">
+              <FileText size={15} /> Invoices
+            </Link>
             <Link href="/profile" className="px-4 py-2 rounded-xl bg-indigo-50/80 text-indigo-700 text-sm font-bold hover:bg-indigo-100 transition-colors shadow-sm">
               Profile
             </Link>

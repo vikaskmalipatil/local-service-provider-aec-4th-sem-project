@@ -270,7 +270,7 @@ export default function ProvidersPage() {
                         </span>
                         <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-100/90">
                           <MapPin size={14} className="opacity-90" />
-                          {p.distance !== undefined ? `${(p.distance / 1000).toFixed(1)} km away` : "Nearby"}
+                          {p.distance !== undefined ? `${(p.distance / 1000).toFixed(5)} km away` : "Nearby"}
                         </span>
                       </div>
                     </div>

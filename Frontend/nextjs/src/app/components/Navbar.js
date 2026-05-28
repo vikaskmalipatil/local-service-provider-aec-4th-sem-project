@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { Search, MapPin, ShoppingCart, User, Heart, PlusCircle, Users } from "lucide-react";
+import { Search, MapPin, ShoppingCart, User, Heart, PlusCircle, Users, FileText } from "lucide-react";
 
 const Navbar = () => {
   const router = useRouter();
@@ -47,6 +47,14 @@ const Navbar = () => {
           >
             <PlusCircle size={16} />
             <span className="hidden md:inline">Request</span>
+          </button>
+          <button
+            onClick={() => router.push("/invoices")}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-emerald-50/80 text-emerald-700 hover:bg-emerald-100 transition-all font-semibold text-sm border border-emerald-200/50 shadow-sm hover:shadow"
+            title="My Invoices"
+          >
+            <FileText size={16} />
+            <span className="hidden md:inline">Invoices</span>
           </button>
           <div className="w-px h-6 bg-gray-200 mx-1 hidden sm:block"></div>
           <button
