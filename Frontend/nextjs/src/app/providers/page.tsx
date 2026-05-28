@@ -254,7 +254,7 @@ export default function ProvidersPage() {
                 <div className="bg-gradient-to-br from-indigo-600 via-indigo-500 to-purple-600 p-6 text-white relative">
                   <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm px-2 py-1 rounded-lg text-xs font-bold flex items-center gap-1">
                     <Star size={12} className="fill-amber-300 text-amber-300" /> 
-                    {p.averageRating > 0 ? p.averageRating : "New"}
+                    {(p.averageRating ?? 0) > 0 ? p.averageRating : "New"}
                     <span className="opacity-70 text-[10px] ml-0.5">({p.reviewCount || 0})</span>
                   </div>
                   <div className="flex items-center gap-4">
