@@ -1,395 +1,129 @@
-<div align="center">
+# LocalFinder
 
-# 🔧 LocalFinder
-### A Full-Stack Local Service Discovery & Booking Platform
+> A modern, full-stack local service discovery and booking platform built with the MERN stack and Next.js.
 
-[![Next.js](https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
-[![Node.js](https://img.shields.io/badge/Node.js-Express-green?style=for-the-badge&logo=node.js)](https://nodejs.org/)
-[![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-brightgreen?style=for-the-badge&logo=mongodb)](https://www.mongodb.com/)
-[![Socket.IO](https://img.shields.io/badge/Socket.IO-4.x-black?style=for-the-badge&logo=socket.io)](https://socket.io/)
-[![TailwindCSS](https://img.shields.io/badge/Tailwind-v4-06B6D4?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
-[![JWT](https://img.shields.io/badge/Auth-JWT-orange?style=for-the-badge&logo=jsonwebtokens)](https://jwt.io/)
-
-**🥈 2nd Prize — Innovation Showcase, Dept. of CSE, Sahyadri College of Engineering & Management**
-
-[Features](#-features) · [Tech Stack](#-tech-stack) · [Architecture](#-architecture) · [API Reference](#-api-reference) · [Getting Started](#-getting-started)
-
-</div>
+![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=flat-square&logo=next.js)
+![Node.js](https://img.shields.io/badge/Node.js-Express-339933?style=flat-square&logo=node.js)
+![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?style=flat-square&logo=mongodb)
+![Socket.IO](https://img.shields.io/badge/Socket.IO-4.x-010101?style=flat-square&logo=socket.io)
+![TailwindCSS](https://img.shields.io/badge/Tailwind-v4-06B6D4?style=flat-square&logo=tailwindcss)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript)
 
 ---
 
-## 📖 About The Project
+## 📌 Overview
 
-**LocalFinder** is a dual-portal, full-stack web application that digitizes the local service economy. It connects **customers** who need home services (plumbing, electrical, cleaning, etc.) with verified **service professionals** nearby — all through a single, unified platform.
-
-The platform handles the complete service lifecycle: **discovery → booking → real-time communication → job tracking → invoicing → reviews**.
-
-> Built independently as a 4th semester engineering project, handling the entire stack — schema design, REST API, real-time infrastructure, and both frontend portals.
+**LocalFinder** bridges the gap between home service seekers and verified local professionals (plumbers, electricians, cleaners, etc.). It features two dedicated Next.js web applications — one for customers and one for service providers — backed by a RESTful Express server, real-time WebSocket communication, and MongoDB geospatial querying.
 
 ---
 
-## ✨ Features
+## 🚀 Key Features
 
-| Feature | Description |
-|---|---|
-| 📍 **Geo-Spatial Search** | "Near Me" discovery using MongoDB's `$geoNear` + `2dsphere` indexing — returns providers sorted by real kilometer distance |
-| 💬 **Real-Time Chat** | Socket.IO-powered messaging scoped per service request. Messages persist to MongoDB for full history on reload |
-| 📋 **Service Booking** | Customers book with urgency levels (Low / Normal / High / Emergency), saved address pre-fill, and optional direct provider selection |
-| 🔄 **Live Request Tracking** | Full status lifecycle: `Pending → Assigned → In Progress → Completed → Cancelled` with provider ETA |
-| 🧾 **Invoice System** | Providers generate itemized invoices (line items, tax rate, discounts). Auto-numbered (`INV-0001`). Customers view received invoices |
-| ⭐ **Ratings & Reviews** | Post-job reviews update provider's `averageRating` in real time. One review per job enforced at both schema and application level |
-| 👤 **Dual Portals** | Completely separate Next.js applications for customers and providers, each tailored to their workflow |
-| 🔐 **Secure Auth** | Role-aware JWT tokens, bcrypt password hashing, middleware-level route protection and ownership validation |
-| 🗺️ **Interactive Maps** | Leaflet-powered map picker for providers to pin exact service coordinates; customers see provider locations |
-| 📬 **Address Book** | Customers manage multiple saved addresses with GeoJSON coordinates, auto-filled during booking |
+- 📍 **Geospatial Provider Discovery:** Distance-based provider search using MongoDB `2dsphere` indexes and `$geoNear` aggregation sorted by real kilometer distance.
+- 💬 **Room-Based Real-Time Chat:** Socket.IO messaging scoped per service request, persisted to MongoDB for complete chat history.
+- 📋 **Service Booking & Live Tracking:** Full request status lifecycle (`Pending` → `Assigned` → `In Progress` → `Completed` → `Cancelled`) with live provider location and ETA tracking.
+- 🧾 **Itemized Invoicing:** Automatic invoice generation (`INV-XXXX`) with line items, tax rates, and discounts.
+- ⭐ **Rating & Review System:** Atomic review submissions updating provider ratings and total job counters.
+- 👥 **Dual-Portal Architecture:** Purpose-built Next.js portals for both customers and service providers.
+- 🔐 **Role-Based Auth:** Secure stateless authentication using JSON Web Tokens (JWT) and bcrypt password hashing.
 
 ---
 
 ## 🛠️ Tech Stack
 
-### Backend
-| Technology | Version | Purpose |
-|---|---|---|
-| **Node.js + Express** | v5.2 | REST API server, middleware, routing |
-| **MongoDB + Mongoose** | v9.5 | Database with schema validation & geospatial indexing |
-| **Socket.IO** | v4.8 | Real-time bidirectional communication |
-| **JWT (jsonwebtoken)** | v9 | Stateless authentication with role claims |
-| **bcryptjs** | v3 | Password hashing (10 salt rounds) |
-| **dotenv** | v17 | Environment variable management |
-
-### Frontend — Customer Portal
-| Technology | Version | Purpose |
-|---|---|---|
-| **Next.js** | 16.2 | React framework with SSR |
-| **React** | 19.2 | UI library |
-| **TypeScript** | v5 | Static typing |
-| **Tailwind CSS** | v4 | Utility-first styling |
-| **Leaflet + React-Leaflet** | v1.9 / v5 | Interactive maps |
-| **Socket.IO Client** | v4.8 | Real-time chat |
-| **Lucide React** | v1.11 | Icon library |
-
-### Frontend — Provider Portal
-| Technology | Version | Purpose |
-|---|---|---|
-| **Next.js** | 16.2 | React framework with SSR |
-| **React** | 19.2 | UI library |
-| **TypeScript** | v5 | Static typing |
-| **Tailwind CSS** | v4 | Utility-first styling |
-| **Geist UI** | v1.7 | Dashboard-oriented UI components |
-| **Leaflet + React-Leaflet** | v1.9 / v5 | Coordinate picker for profile setup |
-| **Socket.IO Client** | v4.8 | Real-time chat |
+- **Frontend (Customer & Provider Portals):** Next.js 16 (React 19), TypeScript, Tailwind CSS, Leaflet / React-Leaflet, Socket.IO-Client
+- **Backend:** Node.js, Express.js (v5), Socket.IO
+- **Database:** MongoDB Atlas with Mongoose ODM (`2dsphere` index enabled)
+- **Security:** JWT Authentication, Role Middleware, Bcryptjs
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ System Architecture
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                     Frontend Applications               │
-│                                                         │
-│   ┌──────────────────┐     ┌──────────────────────┐    │
-│   │  Customer Portal │     │   Provider Portal    │    │
-│   │   (Next.js 16)   │     │    (Next.js 16)      │    │
-│   └────────┬─────────┘     └──────────┬───────────┘    │
-└────────────│──────────────────────────│────────────────-┘
-             │ REST / HTTP              │ REST / HTTP
-             │ WebSockets               │ WebSockets
-┌────────────▼──────────────────────────▼────────────────┐
-│                  Backend (Node.js / Express)            │
-│                                                         │
-│  ┌──────────┐  ┌───────────┐  ┌────────┐  ┌────────┐  │
-│  │ REST API │  │ Socket.IO │  │  JWT   │  │  Geo   │  │
-│  │ 7 Routes │  │  Server   │  │  Auth  │  │ Logic  │  │
-│  └──────────┘  └───────────┘  └────────┘  └────────┘  │
-└────────────────────────┬────────────────────────────────┘
-                         │ Mongoose ODM
-┌────────────────────────▼────────────────────────────────┐
-│                    MongoDB Atlas                         │
-│                                                         │
-│  Users · ServiceProviders · ServiceRequests · Reviews   │
-│  Messages · Addresses · Invoices                        │
-└─────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────┐
+│                      Client Layer                      │
+│   ┌──────────────────┐        ┌────────────────────┐   │
+│   │  Customer Portal │        │  Provider Portal   │   │
+│   │   (Next.js 16)   │        │    (Next.js 16)    │   │
+│   └────────┬─────────┘        └──────────┬─────────┘   │
+└────────────│─────────────────────────────│─────────────┘
+             │ HTTP REST / Socket.IO       │ HTTP REST / Socket.IO
+┌────────────▼─────────────────────────────▼─────────────┐
+│                     Server Layer                       │
+│             Node.js / Express API Gateway              │
+│   ┌──────────┐   ┌────────────┐   ┌────────────────┐   │
+│   │ REST API │   │ Socket.IO  │   │ Auth & Geo     │   │
+│   │ Routers  │   │ WebSocket  │   │ Middleware     │   │
+│   └──────────┘   └────────────┘   └────────────────┘   │
+└──────────────────────────┬─────────────────────────────┘
+                           │ Mongoose ODM
+┌──────────────────────────▼─────────────────────────────┐
+│                    Database Layer                      │
+│                    MongoDB Atlas                       │
+└────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 📁 Project Structure
+## 📁 Repository Structure
 
 ```
-LocalFinder/
-├── Backend/
-│   ├── server.js                 # Entry point — HTTP + Socket.IO server
-│   ├── .env                      # MONGO_URI, JWT_SECRET
-│   ├── controllers/
-│   │   └── addressController.js
-│   ├── middleware/
-│   │   ├── authMiddleware.js     # JWT verification
-│   │   └── roleMiddleware.js     # Role-based access control
-│   ├── models/
-│   │   ├── User.js
-│   │   ├── ServiceProvider.js    # Includes 2dsphere geo index
-│   │   ├── ServiceRequest.js
-│   │   ├── Review.js
-│   │   ├── Message.js
-│   │   ├── Address.js            # Includes 2dsphere geo index
-│   │   └── Invoice.js            # Pre-save hook for auto invoice numbering
-│   └── routes/
-│       ├── auth.js
-│       ├── providerRoutes.js
-│       ├── serviceRequestRoutes.js
-│       ├── reviewRoutes.js
-│       ├── chatRoutes.js
-│       ├── invoiceRoutes.js
-│       └── addressRoutes.js
+.
+├── Backend/                 # Express API server & Socket.IO backend
+│   ├── controllers/         # Business logic (address, booking, etc.)
+│   ├── middleware/          # JWT authentication & role authorization
+│   ├── models/              # Mongoose schemas (User, Provider, Request, Review, Invoice, Chat, Address)
+│   ├── routes/              # Express API route endpoints
+│   └── server.js            # Main HTTP & Socket.IO server setup
 │
 └── Frontend/
-    ├── nextjs/                   # Customer Portal
-    │   └── src/app/
-    │       ├── page.tsx          # Landing page
-    │       ├── providers/        # Browse & filter providers
-    │       ├── request-service/  # Booking form
-    │       ├── track/[requestId] # Live tracking + Chat
-    │       ├── choose-location/  # Address book
-    │       ├── add-address/      # Map-based address picker
-    │       ├── invoices/         # View received invoices
-    │       ├── profile/
-    │       └── components/
-    │           ├── Navbar.js
-    │           ├── ChatWindow.js # Socket.IO chat UI
-    │           ├── MapPicker.js  # Leaflet coordinate picker
-    │           └── footer.js
-    │
-    └── serviceprovider/          # Provider Portal
-        └── src/app/
-            ├── page.tsx          # Landing + auth hub
-            ├── dashboard/        # Request management center
-            ├── profile/          # Profile + map coordinate setter
-            ├── invoices/         # Invoice creation & management
-            └── components/
-                ├── ChatWindow.js
-                └── MapPicker.tsx
+    ├── nextjs/              # Customer Portal (Provider search, booking, tracking, chat)
+    └── serviceprovider/     # Provider Portal (Dashboard, job management, invoices, profile)
 ```
 
 ---
 
-## 🌐 API Reference
+## ⚡ Quick Start
 
-### Authentication — `/api/auth`
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| `POST` | `/signup` | ❌ | Register a new customer |
-| `POST` | `/login` | ❌ | Login, returns JWT |
-| `GET` | `/profile` | ✅ | Get logged-in user's profile |
-
-### Providers — `/api/providers`
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| `POST` | `/signup` | ❌ | Register as a service provider |
-| `POST` | `/login` | ❌ | Provider login, returns JWT + profile |
-| `GET` | `/all` | ❌ | Get all providers (supports `?lat=&lng=&specialty=&maxDistance=`) |
-| `GET` | `/profile` | ✅ Provider | Get own profile |
-| `PUT` | `/profile` | ✅ Provider | Update profile, bio, location (lat/lng) |
-| `GET` | `/requests` | ✅ Provider | Get all assigned jobs |
-| `GET` | `/available-requests` | ✅ Provider | Get pending jobs matching specialty |
-| `POST` | `/accept/:requestId` | ✅ Provider | Accept a job request |
-| `PUT` | `/request/:requestId/status` | ✅ Provider | Update job status |
-| `PUT` | `/request/:requestId/tracking` | ✅ Provider | Update ETA and live location |
-
-### Service Requests — `/api/requests`
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| `POST` | `/` | ✅ | Create a new service request |
-| `GET` | `/my` | ✅ | Get all my requests |
-| `PUT` | `/:id/cancel` | ✅ | Cancel a request |
-
-### Reviews — `/api/reviews`
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| `POST` | `/` | ✅ | Submit a review (Completed jobs only, once per job) |
-| `GET` | `/provider/:providerId` | ❌ | Get all reviews for a provider |
-
-### Chat — `/api/chat`
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| `GET` | `/:requestId` | ❌ | Fetch chat history for a service request |
-
-### Invoices — `/api/invoices`
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| `POST` | `/` | ✅ Provider | Create an invoice with line items |
-| `GET` | `/provider` | ✅ Provider | Get all sent invoices |
-| `GET` | `/client` | ✅ | Get all received invoices |
-| `GET` | `/:id` | ✅ | Get a single invoice (provider or client) |
-| `PUT` | `/:id/status` | ✅ Provider | Update invoice status |
-
-### Addresses — `/api/address`
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| `POST` | `/add` | ✅ | Save a new address with coordinates |
-| `GET` | `/my` | ✅ | Get all saved addresses |
-| `DELETE` | `/:id` | ✅ | Delete a saved address |
-
----
-
-## 🔄 Service Request Lifecycle
-
-```
-[Customer]                    [Provider]
-    │                              │
-    │  Creates Request             │
-    │  POST /api/requests          │
-    │  status: "Pending"           │
-    │                              │
-    │                   Sees available request
-    │                   GET /available-requests
-    │                              │
-    │                   Accepts job
-    │                   POST /accept/:id
-    │  status: "Assigned" ◄────────│
-    │                              │
-    │◄──── Real-time Chat ────────►│  (Socket.IO room per request)
-    │                              │
-    │                   Updates status
-    │  status: "In Progress" ◄─────│
-    │                              │
-    │                   Completes job
-    │  status: "Completed" ◄───────│
-    │                              │
-    │  Submits Review              │  Generates Invoice
-    │  POST /api/reviews           │  POST /api/invoices
-    │                              │
-```
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js 18+
-- MongoDB Atlas account (or local MongoDB)
-- Git
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/vikaskmalipatil/local-service-provider-aec-4th-sem-project.git
-cd local-service-provider-aec-4th-sem-project
-```
+### 1. Prerequisites
+- Node.js (v18+)
+- MongoDB connection string (Atlas or Local)
 
 ### 2. Backend Setup
-
 ```bash
 cd Backend
 npm install
 ```
-
-Create a `.env` file in the `Backend/` directory:
-
+Create a `.env` file inside `Backend/`:
 ```env
-MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/localfinder
-JWT_SECRET=your_super_secret_jwt_key
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret_key
 ```
-
-Start the backend server:
-
+Start server:
 ```bash
 node server.js
-# Server runs on http://localhost:5000
+# Backend runs on http://localhost:5000
 ```
 
 ### 3. Customer Portal Setup
-
 ```bash
 cd Frontend/nextjs
 npm install
 npm run dev
-# Runs on http://localhost:3000
+# Customer Portal runs on http://localhost:3000
 ```
 
 ### 4. Provider Portal Setup
-
 ```bash
 cd Frontend/serviceprovider
 npm install
 npm run dev
-# Runs on http://localhost:3001
+# Provider Portal runs on http://localhost:3001
 ```
 
-> **Note:** All three servers need to be running simultaneously for the full application to work.
-
 ---
 
-## 🔐 Environment Variables
+## 📝 License
 
-| Variable | Location | Description |
-|---|---|---|
-| `MONGO_URI` | `Backend/.env` | MongoDB Atlas connection string |
-| `JWT_SECRET` | `Backend/.env` | Secret key for signing JWT tokens |
-
----
-
-## 🧠 Key Technical Decisions
-
-### Geo-Spatial Search
-Provider locations are stored as GeoJSON `Point` objects with a `2dsphere` index. The "Near Me" feature uses MongoDB's `$geoNear` aggregation pipeline to return providers sorted by real-world distance in kilometers — all computed server-side.
-
-```js
-// MongoDB $geoNear aggregation
-{
-  $geoNear: {
-    near: { type: "Point", coordinates: [lng, lat] },
-    distanceField: "distance",
-    maxDistance: 50000, // 50km in meters
-    spherical: true
-  }
-}
-```
-
-### Real-Time Chat (Socket.IO Rooms)
-Each service request acts as a unique Socket.IO room. Both the customer and provider join the same room using the `requestId`. All messages are saved to MongoDB immediately for persistence across page reloads.
-
-```js
-// Server
-socket.on("join_room", (requestId) => socket.join(requestId));
-socket.on("send_message", async (data) => {
-  await Message.create(data);          // persist to DB
-  io.to(data.requestId).emit("receive_message", data); // broadcast
-});
-```
-
-### Invoice Auto-Numbering
-A Mongoose `pre('save')` hook generates sequential invoice numbers (`INV-0001`, `INV-0002`...) before each invoice is saved, preventing gaps and manual errors.
-
----
-
-## 🗺️ Roadmap
-
-- [ ] **Payment Gateway** — Stripe / Razorpay integration for in-app transactions
-- [ ] **Push Notifications** — Firebase Cloud Messaging for background alerts
-- [ ] **AI-Powered Matching** — Smart provider recommendations based on request details
-- [ ] **Mobile App** — React Native port using the same backend API
-- [ ] **Admin Dashboard** — Provider verification, analytics, dispute resolution
-- [ ] **Redis Adapter** — Socket.IO horizontal scaling across multiple server instances
-
----
-
-## 🏆 Recognition
-
-> 🥈 **2nd Prize** — Innovation Showcase (Project Demo)
-> Department of Computer Science & Engineering
-> **Sahyadri College of Engineering & Management**
-
----
-
-## 👨‍💻 Author
-
-**Vikas Malipatil**
-
-[![GitHub](https://img.shields.io/badge/GitHub-vikaskmalipatil-181717?style=flat&logo=github)](https://github.com/vikaskmalipatil)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat&logo=linkedin)](https://linkedin.com/in/vikaskmalipatil)
-
----
-
-<div align="center">
-  <sub>Built with ❤️ as a 4th Semester Engineering Project</sub>
-</div>
+Distributed under the MIT License. See `LICENSE` for more information.
